@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_local_database/providers/task_provider.dart';
 import 'package:to_do_local_database/screens/bottom_nav_screen.dart';
 import 'package:to_do_local_database/utils/colors.dart';
 
@@ -11,7 +13,14 @@ void main() {
         statusBarColor: primaryColor,
         systemNavigationBarColor: Colors.white),
   );
-  runApp(const MyApp());
+  runApp(
+      MultiProvider(
+        providers: [
+          ChangeNotifierProvider(create: (context) => TaskProvider()),
+        ],
+          child: const MyApp()
+      )
+  );
 }
 
 class MyApp extends StatelessWidget {

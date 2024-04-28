@@ -1,6 +1,10 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_local_database/models/task_model.dart';
+import 'package:to_do_local_database/providers/task_provider.dart';
 import 'package:to_do_local_database/utils/colors.dart';
 
 class AddTaskScreen extends StatelessWidget {
@@ -8,6 +12,7 @@ class AddTaskScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
     final formKey = GlobalKey<FormState>();
     return Scaffold(
       backgroundColor: bgColor,
@@ -62,25 +67,6 @@ class AddTaskScreen extends StatelessWidget {
                   },
                 ),
               ),
-              Container(
-                height: 56,
-                width: double.maxFinite,
-                margin: EdgeInsets.only(top: 24),
-                decoration: BoxDecoration(
-                  color: primaryColor,
-                  borderRadius: BorderRadius.circular(16)
-                ),
-                child: Center(
-                  child: Text(
-                    "ADD",
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white
-                    ),
-                  ),
-                ),
-              ),
               TextButton(
                   onPressed: () {
                     DatePicker.showDateTimePicker(context,
@@ -96,15 +82,53 @@ class AddTaskScreen extends StatelessWidget {
                                 fontSize: 18),
                             doneStyle: TextStyle(color: Colors.red, fontSize: 16)),
                         onChanged: (date) {
-                      print('change $date');
-                    }, onConfirm: (date) {
-                      print('confirm $date');
-                    }, currentTime: DateTime.now(), locale: LocaleType.en);
+                          print('change $date');
+                        }, onConfirm: (date) {
+                          print('confirm $date');
+                        }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                   child: Text(
                     'show date time picker (Chinese)',
                     style: TextStyle(color: primaryColor),
-                  ))
+                  )),
+              GestureDetector(
+                onTap: (){
+                  final task = TaskModel(
+                      dateTime: '67654654685',
+                    title: 'Todo one',
+                    details: 'This is todo one',
+                    status: 'Upcoming',
+                    notificationStatus: 'Active',
+                    notificationTime: '20'
+                  );
+                  taskProvider.insertNote(task).then((value) {
+                    print("doneeeee");
+                    //taskProvider.getAllNotes();
+                  }).catchError((error) {
+                    print(error.toString());
+                  });
+                },
+                child: Container(
+                  height: 56,
+                  width: double.maxFinite,
+                  margin: EdgeInsets.only(top: 24),
+                  decoration: BoxDecoration(
+                    color: primaryColor,
+                    borderRadius: BorderRadius.circular(16)
+                  ),
+                  child: Center(
+                    child: Text(
+                      "ADD",
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        color: Colors.white
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+
             ],
           ),
         ),
