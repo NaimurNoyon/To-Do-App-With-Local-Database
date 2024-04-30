@@ -14,6 +14,11 @@ class TaskProvider extends ChangeNotifier {
   }
 
   Future<int> deleteNotes() =>
-      DbHelper.deleteTask(7);
+      DbHelper.deleteTask(8);
+
+  final data = TaskModel(dateTime: "55646574", title: 'edited', details: 'details', status: 'status', notificationStatus: 'notificationStatus', notificationTime: 'notificationTime');
+
+  Future<int> editTask() =>
+      DbHelper.editTask(8,data);
 
 }

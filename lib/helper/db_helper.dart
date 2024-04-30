@@ -46,6 +46,18 @@ class DbHelper {
   }
 
 
+  static Future<int> editTask(int taskId, TaskModel updatedData) async {
+    final db = await open();
+    return db.update(
+      tableTask,
+      updatedData.toMap(),
+      where: 'id = ?',
+      whereArgs: [taskId],
+    );
+  }
+
+
+
 /*  static Future<List<ZikirModel>> getAllZikirs() async {
     final db = await open();
     final mapList = await db.query(tableZikir);

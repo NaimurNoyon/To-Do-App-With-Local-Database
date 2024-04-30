@@ -86,7 +86,7 @@ class _AllToDoScreenState extends State<AllToDoScreen> {
                       ),
                       SizedBox(height: 6,),
                       Text(
-                        "TODO SUB TITLE",
+                        taskProvider.taskList[index].title,
                         style: TextStyle(
                             fontSize: 10,
                             fontWeight: FontWeight.w400,
@@ -109,7 +109,7 @@ class _AllToDoScreenState extends State<AllToDoScreen> {
                             return [
                               PopupMenuItem(
                                 onTap: (){
-                                  showDatePicker(
+                                  /*showDatePicker(
                                     context: context,
                                     initialDate: DateTime.now(),
                                     firstDate: DateTime(2000),
@@ -134,7 +134,8 @@ class _AllToDoScreenState extends State<AllToDoScreen> {
                                         }
                                       });
                                     }
-                                  });
+                                  });*/
+                                  taskProvider.editTask();
                                 },
                                 child: Row(
                                   children: [
