@@ -101,7 +101,7 @@ class AddTaskScreen extends StatelessWidget {
                     notificationStatus: 'Active',
                     notificationTime: '20'
                   );
-                  taskProvider.insertNote(task).then((value) {
+                  taskProvider.insertTask(task).then((value) {
                     print("doneeeee");
                     //taskProvider.getAllNotes();
                   }).catchError((error) {

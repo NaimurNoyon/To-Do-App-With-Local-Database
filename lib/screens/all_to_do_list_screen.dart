@@ -1,26 +1,43 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
+import 'package:to_do_local_database/providers/task_provider.dart';
 import 'package:to_do_local_database/screens/add_task_screen.dart';
 
 import '../utils/colors.dart';
 
-class AllToDoScreen extends StatelessWidget {
+class AllToDoScreen extends StatefulWidget {
   const AllToDoScreen({super.key});
 
   @override
+  State<AllToDoScreen> createState() => _AllToDoScreenState();
+}
+
+class _AllToDoScreenState extends State<AllToDoScreen> {
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    Provider.of<TaskProvider>(context, listen: false).getAllTasks();
+  }
+  @override
   Widget build(BuildContext context) {
+    final taskProvider = Provider.of<TaskProvider>(context, listen: false);
     return Scaffold(
       backgroundColor: bgColor,
       appBar: AppBar(
         backgroundColor: primaryColor,
         toolbarHeight: 74,
-        title: const Text(
-          "TODO APP",
-          style: TextStyle(
-            fontSize: 24,
-            fontWeight: FontWeight.w600,
-            color: Colors.white
+        title: GestureDetector(
+          onTap: (){
+            taskProvider.deleteNotes();
+          },
+          child: const Text(
+            "TODO APP",
+            style: TextStyle(
+              fontSize: 24,
+              fontWeight: FontWeight.w600,
+              color: Colors.white
+            ),
           ),
         )
       ),
@@ -36,7 +53,7 @@ class AllToDoScreen extends StatelessWidget {
         ),
       ),
       body: ListView.builder(
-          itemCount: 50,
+          itemCount: taskProvider.taskList.length,
           itemBuilder: (context, index){
             return Container(
               padding: EdgeInsets.all(18),
@@ -60,7 +77,7 @@ class AllToDoScreen extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        "TODO TITLE",
+                        taskProvider.taskList[index].id.toString(),
                         style: TextStyle(
                           fontSize: 13,
                           fontWeight: FontWeight.w600,

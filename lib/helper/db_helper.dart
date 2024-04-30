@@ -22,26 +22,31 @@ class DbHelper {
     });
   }
 
-  static Future<int> insertNote(TaskModel taskModel) async {
+  static Future<int> insertTask(TaskModel taskModel) async {
     final db = await open();
     return db.insert(tableTask, taskModel.toMap());
   }
 
 
 
-/*  static Future<List<NoteModel>> getAllNotes() async {
+  static Future<List<TaskModel>> getAllTasks() async {
     final db = await open();
-    final mapList = await db.query(tableNote);
+    final mapList = await db.query(tableTask);
     return List.generate(mapList.length, (index) =>
-        NoteModel.fromMap(mapList[index]));
+        TaskModel.fromMap(mapList[index]));
   }
 
-  static Future<int> deleteNotes() async {
+  static Future<int> deleteTask(int taskId) async {
     final db = await open();
-    return db.delete(tableNote);
+    return db.delete(
+      tableTask,
+      where: 'id = ?',
+      whereArgs: [taskId],
+    );
   }
 
-  static Future<List<ZikirModel>> getAllZikirs() async {
+
+/*  static Future<List<ZikirModel>> getAllZikirs() async {
     final db = await open();
     final mapList = await db.query(tableZikir);
     return List.generate(mapList.length, (index) =>
