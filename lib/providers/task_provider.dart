@@ -4,21 +4,31 @@ import '../helper/db_helper.dart';
 
 class TaskProvider extends ChangeNotifier {
   List<TaskModel> taskList = [];
+  bool isLoading = false;
 
-  Future<int> insertTask(TaskModel taskModel) =>
-      DbHelper.insertTask(taskModel);
-
-  void getAllTasks() async {
-    taskList = await DbHelper.getAllTasks();
+  Future<void> insertTask(TaskModel taskModel) async{
+    await DbHelper.insertTask(taskModel);
+    getAllTasks();
     notifyListeners();
   }
 
-  Future<int> deleteNotes() =>
-      DbHelper.deleteTask(8);
+  Future<void> getAllTasks() async {
+    isLoading = true;
+    taskList = await DbHelper.getAllTasks();
+    isLoading = false;
+    notifyListeners();
+  }
+
+  Future<void> deleteNotes(int id) async{
+    await DbHelper.deleteTask(id);
+    getAllTasks();
+  }
 
   final data = TaskModel(dateTime: "55646574", title: 'edited', details: 'details', status: 'status', notificationStatus: 'notificationStatus', notificationTime: 'notificationTime');
 
-  Future<int> editTask() =>
-      DbHelper.editTask(8,data);
+  Future<int> editTask(){
+    return DbHelper.editTask(8,data);
+  }
+
 
 }

@@ -120,6 +120,8 @@ class AddTaskScreen extends StatelessWidget {
                   }).catchError((error) {
                     print(error.toString());
                   });
+                  Navigator.pop(context);
+                  //Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => Ho))
                 },
                 child: Container(
                   height: 56,
