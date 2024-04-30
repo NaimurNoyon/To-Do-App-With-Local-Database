@@ -1,4 +1,3 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart' as picker;
 import 'package:flutter_datetime_picker_plus/flutter_datetime_picker_plus.dart';
@@ -71,8 +70,6 @@ class AddTaskScreen extends StatelessWidget {
                   onPressed: () {
                     DatePicker.showDateTimePicker(context,
                         showTitleActions: true,
-                        minTime: DateTime(2018, 3, 5),
-                        maxTime: DateTime(2019, 6, 7),
                         theme: picker.DatePickerTheme(
                             headerColor: primaryColor,
                             backgroundColor: bgColor,
@@ -88,9 +85,25 @@ class AddTaskScreen extends StatelessWidget {
                         }, currentTime: DateTime.now(), locale: LocaleType.en);
                   },
                   child: Text(
-                    'show date time picker (Chinese)',
+                    'Set Date and Time',
                     style: TextStyle(color: primaryColor),
                   )),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Row(
+                  children: [
+                    Switch(
+                      activeColor: Colors.white,
+                      activeTrackColor: primaryColor,
+                      value: false,
+                      onChanged: (value) {
+                        //provider.settingNotification('isha');
+                      },
+                    ),
+                    Text("Turn On Notification")
+                  ],
+                ),
+              ),
               GestureDetector(
                 onTap: (){
                   final task = TaskModel(
